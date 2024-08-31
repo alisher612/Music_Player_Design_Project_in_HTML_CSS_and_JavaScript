@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Music player</title>
+</head>
+<body>
+    <div class="container">
+        <div class="musicPlayer">
+            <nav>
+                <div class="circle">
+                    <i class='bx bx-chevron-left'></i>
+                </div>
+                <div class="circle">
+                    <i class='bx bx-menu'></i>
+                </div>
+            </nav>
+            <img src="media/468-thumbnail.png" class="song-img">
+            <h1>O_Maahi</h1><br>
+            <p>Ft.Arijit singh</p>
+            <audio id="song">
+                <source src="media/Dunki__O_Maahi__Full_Video____Shah_Rukh_Khan___Taapsee_Pannu___Pritam___Arijit_Singh___Irshad_Kamil(128k).mp3" type="audio/mp3">
+            </audio>
+            <input type="range" value="0" id="progress">
+            <div class="controls">
+                <div><i class='bx bx-rewind'></i></div>
+                <div onclick="playPause()"><i class='bx bx-play' id="ctrlIcon"></i></div>    
+                <div><i class='bx bx-fast-forward'></i></div>    
+             </div>
+        </div>
+    </div>
+
+    <script>
+        let progress = document.getElementById("progress");
+        let song = document.getElementById("song");
+        let ctrlIcon = document.getElementById("ctrlIcon");
+
+        song.onloadedmetadata = function(){
+            progress.max = song.duration;
+            progress.value = song.currentTime;
+        }
+        function playPause(){
+            if(ctrlIcon.classList.contains("bx-pause")){
+                song.pause();
+                ctrlIcon.classList.remove("bx-pause");
+                ctrlIcon.classList.add("bx-play");
+            } else{
+                song.play();
+                ctrlIcon.classList.add("bx-pause");
+                ctrlIcon.classList.remove("bx-play");
+            }
+        }
+        if(song.play()){
+            setInterval(()=>{
+                progress.value = song.currentTime;
+                },500);
+        }
+
+        progress.onchange = function(){
+            song.play();
+            song.currentTime = progress.value;
+            ctrlIcon.classList.add("bx-pause");
+            ctrlIcon.classList.remove("bx-play");
+        }
+    </script>
+</body>
+</html>
